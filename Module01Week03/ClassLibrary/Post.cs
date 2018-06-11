@@ -10,6 +10,7 @@ namespace ClassLibrary
     *  This class is used to create a new post (message) which will be shown
     * into the Board class.
     */
+    [Serializable]
     class Post : Board, IEquatable<Post>, IComparable<Post>
     {
         public DateTime postTime { get; private set; }

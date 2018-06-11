@@ -9,9 +9,10 @@ namespace ClassLibrary
     /*
      *  This class is used to create new users.
      */
+     [Serializable]
     public class User : Board
     {
-        private string email;
+        public string email { get; private set; }
         private string firstName;
         private string lastName;
         private DateTime birthDate;
@@ -38,10 +39,10 @@ namespace ClassLibrary
 
         }
 
-        // Overloading fucntion to update just email:
-        public void EditUserInformation(string email)
+        public override string ToString()
         {
-            this.email = email;
+            return firstName + " " + lastName;
         }
+
     }
 }
