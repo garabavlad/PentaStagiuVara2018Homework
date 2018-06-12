@@ -18,6 +18,14 @@ namespace ClassLibrary
         // List for keeping all the users in this collection.
         private List<User> userList;
 
+        // Events:
+        // Event handler for new messages:
+        public delegate void NewMessageEventHandler(object source, EventArgs args);
+        public event NewMessageEventHandler NewPostedMessage;
+        // Event handler for new users:
+        private event EventHandler NewUserEvent;
+
+
         // Class constructor:
         public Board()
         {
@@ -35,6 +43,7 @@ namespace ClassLibrary
         public void AddUser(User newUser)
         {
             userList.Add(newUser);
+            NewUserAnnouncement();
         }
 
 
@@ -44,7 +53,7 @@ namespace ClassLibrary
             DateTime postTime = DateTime.Now;
             Post newPost = new Post(postTime,message,author);
             postList.Add(newPost);
-            postList.Sort();
+            OnNewPost(author);
         }
 
         //  Method for displaying all posts.
@@ -95,6 +104,32 @@ namespace ClassLibrary
             Stream stream = new FileStream("BoardDB.bin", FileMode.Create, FileAccess.Write, FileShare.None);
             formatter.Serialize(stream, this);
             stream.Close();
+        }
+
+        // Method to fire when new message was posted:
+        protected virtual void OnNewPost(User sender)
+        {
+            NewPostedMessage?.Invoke(sender, EventArgs.Empty);
+        }
+        // Method to fire when new user was posted:
+        private void NewUserAnnouncement()
+        {
+            if(NewUserEvent != null)
+            {
+                NewUserEvent(this, EventArgs.Empty);
+            }
+        }
+
+        // Method to announce all users about new message:
+        public void AnnounceNewPost(User sender)
+        {
+            foreach(var user in userList)
+            {
+                if(user != sender)
+                {
+                    user.NewMessages++;
+                }
+            }
         }
     }
 }

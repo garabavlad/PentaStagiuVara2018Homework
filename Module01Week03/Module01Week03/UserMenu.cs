@@ -6,6 +6,7 @@ using ClassLibrary;
 
 namespace Module01Week03
 {
+    [Serializable]
     class UserMenu
     {
         public bool isExitSelected { get; private set; } = false;
@@ -25,7 +26,11 @@ namespace Module01Week03
             }
             else
             {
-                Console.WriteLine("\nWelcome " + loggedUser.email + "!");
+                Console.WriteLine("\nWelcome " + loggedUser.email + "!" +
+                    "\nYou have {0} new messages!",loggedUser.NewMessages);
+
+                // Creating an event:
+                //mainBoard.NewPostedMessage += OnNewPost;
             }
         }
 
@@ -98,10 +103,11 @@ namespace Module01Week03
                 Console.WriteLine("You are not siggned in! Please sign in to post a message.");
                 return;
             }
-            //Creating new posts:
+            // Creating new post:
             Console.WriteLine("Enter your message: ");
             string message = Console.ReadLine();
             mainBoard.AddPost(message, loggedUser);
+
         }
         private void EditProfileOption()
         {
@@ -116,7 +122,13 @@ namespace Module01Week03
         private void SignOutOption()
         {
             isExitSelected = true;
-            loggedUser = null;
+            //mainBoard.NewPostedMessage -= OnNewPost;
+        }
+
+        private void OnNewPost(object sender,EventArgs args)
+        {
+            mainBoard.AnnounceNewPost((User)sender);
+            Console.WriteLine("New message added!");
         }
     }
 

@@ -17,6 +17,9 @@ namespace ClassLibrary
         private string lastName;
         private DateTime birthDate;
 
+        // For event handler:
+        public int NewMessages { get; internal set; } = 0;
+
         /*
          *  User class constructor.
          *  Creates a new user with standard input information.
@@ -39,6 +42,7 @@ namespace ClassLibrary
 
         }
 
+        // @override display method
         public override string ToString()
         {
             return firstName + " " + lastName;
