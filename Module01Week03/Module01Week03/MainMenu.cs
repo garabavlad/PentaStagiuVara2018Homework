@@ -20,7 +20,8 @@ namespace Module01Week03
         {
             try
             {
-                mainBoard = Board.Deserialize();
+                // Deserializing the board from the last session.
+                mainBoard = BoardSerializator.DeserializeBoard();
             }
             catch(FileNotFoundException e)
             {
@@ -173,7 +174,8 @@ namespace Module01Week03
             isExitSelected = true;
 
             // Serialize instance:
-            mainBoard.Serialize();
+            BoardSerializator boardSerializator = new BoardSerializator();
+            boardSerializator.SerializeBoard(mainBoard);
         }
     }
 }

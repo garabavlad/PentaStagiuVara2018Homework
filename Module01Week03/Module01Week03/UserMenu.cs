@@ -29,7 +29,8 @@ namespace Module01Week03
                 Console.WriteLine("\nWelcome " + loggedUser.email + "!" +
                     "\nYou have {0} new messages!",loggedUser.NewMessages);
 
-                // Creating an event:
+                // Creating events:
+                //mainBoard.SeenNewMessages += OnSeenMessages;
                 //mainBoard.NewPostedMessage += OnNewPost;
             }
         }
@@ -92,6 +93,12 @@ namespace Module01Week03
         
         private void ShowBoardOption()
         {
+            // Reseting new messages if logged user has new messages:
+            if (loggedUser != null && loggedUser.NewMessages > 0)
+            {
+                mainBoard.ResetNewMessages(loggedUser);
+            }
+
             // Displaying:
             Console.WriteLine("Board:");
             mainBoard.ShowBoard();
@@ -100,7 +107,7 @@ namespace Module01Week03
         {
             if(loggedUser == null)
             {
-                Console.WriteLine("You are not siggned in! Please sign in to post a message.");
+                Console.WriteLine(">System (" + DateTime.Now + "): You are not siggned in!\nPlease sign in to post a message.");
                 return;
             }
             // Creating new post:
@@ -113,7 +120,7 @@ namespace Module01Week03
         {
             if (loggedUser == null)
             {
-                Console.WriteLine("You are not siggned in! Please sign in to manage your account.");
+                Console.WriteLine(" > System(" + DateTime.Now + "): You are not siggned in!\nPlease sign in to manage your account.");
                 return;
             }
 
@@ -122,14 +129,25 @@ namespace Module01Week03
         private void SignOutOption()
         {
             isExitSelected = true;
+            // Deataching events so they won't stack up:
             //mainBoard.NewPostedMessage -= OnNewPost;
+            //mainBoard.SeenNewMessages -= OnSeenMessages;
         }
 
+        // Method used to announce new users about new message:
+        // (used for an event)
         private void OnNewPost(object sender,EventArgs args)
         {
             mainBoard.AnnounceNewPost((User)sender);
             Console.WriteLine("New message added!");
         }
+
+        /*// Method used to reset new messages:
+        // (used for an event)
+        private void OnSeenMessages(object looker, EventArgs args)
+        {
+            mainBoard.ResetNewMessages((User)looker);
+        }*/
     }
 
 }

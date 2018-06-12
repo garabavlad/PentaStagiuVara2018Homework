@@ -11,7 +11,7 @@ namespace ClassLibrary
     * into the Board class.
     */
     [Serializable]
-    class Post : Board, IEquatable<Post>, IComparable<Post>
+    public class Post : Board, IEquatable<Post>, IComparable<Post>
     {
         public DateTime postTime { get; private set; }
         public string text { get; private set; }
