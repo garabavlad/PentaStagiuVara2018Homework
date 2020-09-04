@@ -72,7 +72,7 @@ namespace ClassLibrary
                 if (el.author != null)
                 {
                     Console.WriteLine("\n>" + el.author + " wrote on " + el.postTime +
-                        ":\n" + el.text);
+                        ":" + el.text);
                 }
                 else
                 {
