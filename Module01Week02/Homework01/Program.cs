@@ -41,6 +41,7 @@ namespace Homework01
             genders? personGender;
             
 
+            Console.WriteLine("This program gets persons details and calculates his age untill retirement;");
             Console.WriteLine("Upload data of the person:");
             Console.WriteLine("Enter the year he/she was born:");
             bornYear = Convert.ToInt32(Console.ReadLine());
